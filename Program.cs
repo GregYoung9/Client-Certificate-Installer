@@ -1,10 +1,10 @@
 ﻿using System;
 using System.IO;
 using System.Security.Cryptography.X509Certificates;
-
-Console.Write("Enter certificate path and name or [Enter] key to accept the default path [C:\\Certs\\UniversalPublishers.pfx]: ");
+//S:\JYA-UPB-DATA\Client Certificate UPB
+Console.Write("Enter certificate path and name or [Enter] key to accept the default path [S:\\JYA-UPB-DATA\\Client Certificate UPB\\UniversalPublishers.pfx]: ");
 string? inputPath = Console.ReadLine();
-string certPath = string.IsNullOrWhiteSpace(inputPath) ? @"C:\Certs\UniversalPublishers.pfx" : inputPath;
+string certPath = string.IsNullOrWhiteSpace(inputPath) ? @"S:\JYA-UPB-DATA\Client Certificate UPB\UniversalPublishers.pfx" : inputPath;
 
 if (!File.Exists(certPath))
 {
@@ -38,12 +38,16 @@ while (cert == null)
         else
         {
             Console.WriteLine("Error loading certificate: " + ex.Message);
+            Console.WriteLine("Press Enter to exit...");
+            Console.ReadLine();
             return;
         }
     }
     catch (Exception ex)
     {
         Console.WriteLine("Error loading certificate: " + ex.Message);
+        Console.WriteLine("Press Enter to exit...");
+        Console.ReadLine();
         return;
     }
 }
@@ -67,11 +71,15 @@ using (var store = new X509Store(StoreName.Root, StoreLocation.LocalMachine))
         if (alreadyInstalled)
         {
             Console.WriteLine("Certificate is already installed in Trusted Root Certification Authorities (Local Machine).");
+            Console.WriteLine("Press Enter to exit...");
+            Console.ReadLine();
         }
         else
         {
             store.Add(cert);
             Console.WriteLine("Certificate installed successfully to Trusted Root Certification Authorities (Local Machine).");
+            Console.WriteLine("Press Enter to exit...");
+            Console.ReadLine();
         }
     }
     catch (System.Security.Cryptography.CryptographicException ex) when (ex.Message.Contains("Access is denied", StringComparison.OrdinalIgnoreCase))
@@ -83,5 +91,10 @@ using (var store = new X509Store(StoreName.Root, StoreLocation.LocalMachine))
     catch (Exception ex)
     {
         Console.WriteLine("An error occurred while accessing the certificate store: " + ex.Message);
+        Console.WriteLine("Press Enter to exit...");
+        Console.ReadLine();
     }
 }
+
+//Console.WriteLine("Press Enter to exit...");
+//Console.ReadLine();
